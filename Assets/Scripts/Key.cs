@@ -9,9 +9,11 @@ public class Key : MonoBehaviour {
 	public bool popped;
 	public Material mat1;
 	public Material mat2;
+	Keyboard kb;
 
 	// Use this for initialization
 	void Start () {
+		kb = GameObject.Find ("KeyHolder").GetComponent<Keyboard> ();
 		downPos = this.transform.position;
 		upPos = this.transform.position - new Vector3 (0, -0.4f, 0);
 		this.gameObject.GetComponent<Renderer> ().material = mat1;
@@ -37,5 +39,15 @@ public class Key : MonoBehaviour {
 		}
 
 	
+	}
+
+	void OnTriggerEnter(Collider col)
+	{
+		if (col.gameObject.name == "Runner") {
+			Destroy(col.gameObject);
+			if (popped) {
+				kb.lives--;
+			}
+		}
 	}
 }
